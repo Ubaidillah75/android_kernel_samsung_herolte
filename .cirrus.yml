@@ -29,7 +29,7 @@ build_task:
     cp ./arch/arm64/boot/Image ./build/
     cp ./arch/arm64/boot/dtb.img ./build/
     cd ./build
-    ./create-boot-image.sh boot.img Image ./original/ramdisk.img dtb.img
+    ./create-boot-image.sh boot.img Image ramdisk.img dtb.img
 
   output_artifacts:
     path: "./build/boot.img"
