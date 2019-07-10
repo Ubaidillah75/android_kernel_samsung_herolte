@@ -1,0 +1,35 @@
+container:
+  image: xeffyr/android-kernel-builder:latest
+  cpu: 8
+  memory: 16
+
+build_task:
+  timeout_in: 120m
+
+  environment:
+    ARCH: arm64
+    CROSS_COMPILE: aarch64-linux-android-
+
+  clone_script: |
+    if [[ -z "$CIRRUS_PR" ]]; then
+      git clone --depth=25 --branch="$CIRRUS_BRANCH" "https://x-access-token:${CIRRUS_REPO_CLONE_TOKEN}@github.com/${CIRRUS_REPO_FULL_NAME}.git" "$CIRRUS_WORKING_DIR"
+      git reset --hard "$CIRRUS_CHANGE_IN_REPO"
+    else
+      git clone "https://x-access-token:${CIRRUS_REPO_CLONE_TOKEN}@github.com/${CIRRUS_REPO_FULL_NAME}.git" "$CIRRUS_WORKING_DIR"
+      git fetch origin "pull/$CIRRUS_PR/head:pull/$CIRRUS_PR"
+      git reset --hard "$CIRRUS_CHANGE_IN_REPO"
+    fi
+
+  build_kernel_script: |
+    source /etc/profile.d/toolchain-aarch64.sh
+    make exynos8890-herolte-xeffyr-mod_defconfig
+    make -j8
+
+  create_bootimg_script: |
+    cp ./arch/arm64/boot/Image ./build/
+    cp ./arch/arm64/boot/dtb.img ./build/
+    cd ./build
+    ./create-boot-image.sh boot.img Image ./original/ramdisk.img dtb.img
+
+  output_artifacts:
+    path: "./build/boot.img"
