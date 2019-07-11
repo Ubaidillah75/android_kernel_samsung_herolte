@@ -8,6 +8,8 @@ Kernel is close to [ivanmeler/android_kernel_samsung_herolte](https://github.com
 as much as possible. Hacks like overclocking/undervolting, wakelock modifiers
 and others modifying standard kernel behaviour will not be available.
 
+Builds are done automatically on each push. The latest version can be obtained from [cirrus:artifacts/output/build/boot.img](https://api.cirrus-ci.com/v1/artifact/github/xeffyr/android_kernel_samsung_herolte/build/output/build/boot.img).
+
 ### Enabled features
 
 * Additional FS: AUFS, BTRFS, F2FS, Overlay, SquashFS
