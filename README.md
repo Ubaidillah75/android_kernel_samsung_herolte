@@ -1,5 +1,7 @@
 ## Custom kernel for Samsung Galaxy S7 (SM-G930F)
 
+![build status](https://api.cirrus-ci.com/github/xeffyr/android_kernel_samsung_herolte.svg)
+
 A kernel for use with Lineage OS 16.0 with some additional features enabled.
 Mostly useful only for those who run Linux distribution in a chroot in parallel
 with the Android OS.
