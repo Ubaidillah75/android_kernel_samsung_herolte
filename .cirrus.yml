@@ -20,15 +20,10 @@ build_task:
       git reset --hard "$CIRRUS_CHANGE_IN_REPO"
     fi
 
-  build_kernel_script: |
+  build_script: |
     source /etc/profile.d/toolchain-aarch64.sh
     make exynos8890-herolte-xeffyr-mod_defconfig
     make -j8
 
-  create_bootimg_script: |
-    cd ./build
-    ./repack-ramdisk.sh ramdisk ramdisk.img
-    ./create-boot-image.sh boot.img ../arch/arm64/boot/Image ramdisk.img ../arch/arm64/boot/dtb.img
-
   output_artifacts:
-    path: "./build/boot.img"
+    path: "./boot.img"
