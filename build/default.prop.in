@@ -46,7 +46,5 @@ ro.boot.warranty_bit=0
 #
 # BOOTIMAGE_BUILD_PROPERTIES
 #
-ro.bootimage.build.date=Wed Jul 10 02:43:28 2019 UTC
-ro.bootimage.build.date.utc=1562813008
-ro.bootimage.build.fingerprint=samsung/heroltexx/herolte:8.0.0/R16NW/G930FXXU2ERD5:user/release-keys
 persist.sys.usb.config=none
+ro.bootimage.build.fingerprint=samsung/heroltexx/herolte:8.0.0/R16NW/G930FXXU2ERD5:user/release-keys

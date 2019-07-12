@@ -46,4 +46,11 @@ if [ -e "$OUTPUT_FILE" ]; then
 	exit 1
 fi
 
+# Create default.prop file.
+cat "${SCRIPT_DIR}/default.prop.in" > "${SCRIPT_DIR}/ramdisk/default.prop"
+# Write timestamp.
+TIMESTAMP_SECONDS=$(date +%s)
+echo "ro.bootimage.build.date=$(date --date="@${TIMESTAMP_SECONDS}" "+%a %b %d %H:%M:%S %Y %Z")" >> "${SCRIPT_DIR}/ramdisk/default.prop"
+echo "ro.bootimage.build.date.utc=${TIMESTAMP_SECONDS}" >> "${SCRIPT_DIR}/ramdisk/default.prop"
+
 mkbootfs "$INPUT_RAMDISK_DIRECTORY" | gzip -9 > "${OUTPUT_FILE}"
