@@ -26,10 +26,9 @@ build_task:
     make -j8
 
   create_bootimg_script: |
-    cp ./arch/arm64/boot/Image ./build/
-    cp ./arch/arm64/boot/dtb.img ./build/
     cd ./build
-    ./create-boot-image.sh boot.img Image ramdisk.img dtb.img
+    ./repack-ramdisk.sh ramdisk ramdisk.img
+    ./create-boot-image.sh boot.img ../arch/arm64/boot/Image ramdisk.img ../arch/arm64/boot/dtb.img
 
   output_artifacts:
     path: "./build/boot.img"
