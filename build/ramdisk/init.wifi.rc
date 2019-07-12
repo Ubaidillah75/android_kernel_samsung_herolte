@@ -51,7 +51,7 @@ on post-fs-data
     write /data/misc/conn/.wifiver.info 0
     chown system root /data/misc/conn/.wifiver.info
     chmod 0666 /data/misc/conn/.wifiver.info
-	
+
     # for WIFI Antenna
     write /data/misc/conn/.wificable.info E
     chown system root /data/misc/conn/.wificable.info
@@ -92,9 +92,9 @@ on post-fs-data
 on boot
     setprop wifi.interface wlan0
 
-    # Wifi firmware reload path   
-    chown wifi wifi /sys/module/dhd/parameters/firmware_path	
-	
+    # Wifi firmware reload path
+    chown wifi wifi /sys/module/dhd/parameters/firmware_path
+
     # Pcie WiFi T-put setting
     write /sys/class/net/wlan0/queues/rx-0/rps_cpus 00
 
@@ -120,13 +120,6 @@ service mfgloader /system/vendor/bin/hw/mfgloader
     disabled
     oneshot
 
-service wlandutservice /system/bin/wlandutservice
-    class main
-    user system
-    group wifi net_raw net_admin system inet
-    disabled
-    oneshot
-
 service macloader /system/vendor/bin/macloader
     class main
     disabled
@@ -137,9 +130,3 @@ on property:init.svc.macloader=stopped
     chmod 0664 /data/misc/conn/.cid.info
     chown system root /data/.rev
     chmod 0664 /data/.rev
-
-# for wlan FTM app
-service ftm_ptt /system/bin/ftm_ptt -d
-    user root
-    group radio system
-    disabled

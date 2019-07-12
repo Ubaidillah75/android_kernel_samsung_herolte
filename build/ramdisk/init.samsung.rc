@@ -17,7 +17,7 @@ on init
     restorecon_recursive /mnt/secure/asec
 
     mkdir /storage 0755 root root
-    
+
     # Create energy-aware scheduler tuning nodes
     mkdir /dev/stune
     mount cgroup none /dev/stune schedtune
@@ -42,7 +42,7 @@ on init
     chmod 0664 /dev/stune/foreground/tasks
     chmod 0664 /dev/stune/background/tasks
     chmod 0664 /dev/stune/system-background/tasks
-    
+
     write /proc/sys/kernel/sched_compat_yield 1
 ### DEFAULT
     # Create cgroup mount points for process groups
@@ -210,7 +210,7 @@ on init
     chown system system /sys/kernel/hmp/down_threshold
 
     # set permission to 0660 for camera preview lagging
-    chmod 0660 /sys/kernel/hmp/down_threshold 
+    chmod 0660 /sys/kernel/hmp/down_threshold
 
     # reset_reason
     chown system system /proc/reset_reason
@@ -233,10 +233,10 @@ on init
 
 on post-fs
     start sec-sh
-    
+
     # mobicore
     setprop sys.mobicoredaemon.enable stopped
- 
+
 ## Samsung ODE >>>
     mount tmpfs tmpfs /mnt/secure private rec
 ## Samsung ODE <<<
@@ -245,7 +245,7 @@ on post-fs
 
     chown system log /proc/sec_log
     chown system log /proc/reset_summary
-    chmod 0440 /proc/reset_summary 
+    chmod 0440 /proc/reset_summary
 
 on post-fs-data
 # [ SEC_SELINUX_PORTING_COMMON
@@ -273,7 +273,7 @@ on post-fs-data
     chown system system /dev/tzic
     restorecon /dev/icd
     restorecon /dev/icdr
-    
+
     #SideSync
     chown system system /dev/android_ssusbcon
     chmod 0660 /dev/android_ssusbcon
@@ -296,7 +296,7 @@ on post-fs-data
 
     #lpnetConfig AppSync
     mkdir /data/misc/lpnet 0700 system system
-	
+
 	# Professioanl Audio
     mkdir /data/misc/jack 0770 jack system
 
@@ -315,7 +315,7 @@ on post-fs-data
     mkdir /dev/socket/uibc 0777 media system
     chown media system /dev/socket/uibc
     chmod 0775 /dev/socket/uibc
-    
+
 #~ # Chooser/Resolver
 #~ cpyContent_rmdir /data/user/0/system:ui
 #~ cpyContent_rmdir /data/user/0/android:ui
@@ -366,7 +366,7 @@ on boot
     # MTP permission
     chmod 0660 /dev/usb_mtp_gadget
     chown system mtp /dev/usb_mtp_gadget
-    mkdir /dev/socket/mtp 0770 system mtp	
+    mkdir /dev/socket/mtp 0770 system mtp
 
     # NPS permission
     mkdir /dev/socket/nps 0770 system system
@@ -376,7 +376,7 @@ on boot
 
     # MSP FactoryApp
     mkdir /efs/FactoryApp 0775 system system
-    
+
     # Switch Device
     chown system radio /sys/class/sec/switch/usb_sel
     chown system radio /sys/class/sec/switch/uart_sel
@@ -582,7 +582,7 @@ on boot
 
     chown system system /sys/class/timed_output/vibrator/intensity
     chown system system /sys/class/timed_output/vibrator/multi_freq
-    
+
 # HMT relay mode
     chown radio system /sys/devices/virtual/relay_on
 
@@ -591,7 +591,7 @@ on nonencrypted
     mkdir /data/misc/mcRegistry 0775 system system
     class_start main
     class_start late_start
-    
+
 on charger
     chmod 0664 /sys/class/power_supply/battery/batt_temp_table
     chown system radio /sys/class/power_supply/battery/batt_temp_table
@@ -621,34 +621,11 @@ on property:vold.decrypt=trigger_restart_framework
     class_start main
     class_start late_start
 
-# deferred initcall
-service sec-sh /system/bin/sh /system/etc/init.sec.boot.sh
-    class core
-    user root
-    oneshot
-
 # MobiCore startup
 service mobicore /system/bin/mcDriverDaemon -r /system/app/FFFFFFFF000000000000000000000001.drbin -r /system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin -r /system/app/mcRegistry/ffffffffd00000000000000000000016.tlbin
     class core
     user system
     group system
-    disabled
-
-# strongSwan VPN
-service charon /system/bin/charon
-    class main
-    socket charon stream 600 system system
-    # charon will setuid to vpn after getting necessary resources.
-    group vpn net_admin inet shell
-    disabled
-    oneshot
-
-# IO stats Deamon
-service iod /system/bin/iod
-    user system
-    group shell
-    class main
-    oneshot
     disabled
 
 on property:sys.boot_completed=1
@@ -658,17 +635,3 @@ on property:sys.boot_completed=1
 on property:init.svc.media=restarting
 #~ check_icd
     start icd
-
-# Sensorhub service
-service sensorhubservice /system/bin/sensorhubservice
-    class main
-    user system
-    group input
-
-#preparefbe
-service preparefbe_ce /system/bin/preparefbe storage_ce
-    oneshot
-    disabled
-service preparefbe_de /system/bin/preparefbe storage_de
-    oneshot
-    disabled
