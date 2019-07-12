@@ -764,13 +764,3 @@ on property:ro.debuggable=1
     # Give reads to anyone for the window trace folder on debug builds.
     chmod 0775 /data/misc/wmtrace
     start console
-
-service flash_recovery /system/bin/install-recovery.sh
-    class main
-    oneshot
-    disabled
-
-# update recovery if enabled
-on property:persist.sys.recovery_update=true
-    start flash_recovery
-
