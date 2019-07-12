@@ -58,6 +58,7 @@ Module.symvers
 !.gitignore
 !.mailmap
 !.cirrus.yml
+!.envrc
 
 #
 # Generated include files
